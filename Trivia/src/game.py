@@ -93,16 +93,10 @@ class Game:
 
     @property
     def _current_category(self):
-        if self.places[self.current_player] == 0: return Category.POP
-        if self.places[self.current_player] == 4: return Category.POP
-        if self.places[self.current_player] == 8: return Category.POP
-        if self.places[self.current_player] == 1: return Category.SCIENCE
-        if self.places[self.current_player] == 5: return Category.SCIENCE
-        if self.places[self.current_player] == 9: return Category.SCIENCE
-        if self.places[self.current_player] == 2: return Category.SPORTS
-        if self.places[self.current_player] == 6: return Category.SPORTS
-        if self.places[self.current_player] == 10: return Category.SPORTS
-        return Category.ROCK
+        if self.places[self.current_player] % 4 == 0: return Category.POP
+        if self.places[self.current_player] % 4 == 1: return Category.SCIENCE
+        if self.places[self.current_player] % 4 == 2: return Category.SPORTS
+        if self.places[self.current_player] % 4 == 3: return Category.ROCK
 
     def was_correctly_answered(self):
         if self.in_penalty_box[self.current_player]:
