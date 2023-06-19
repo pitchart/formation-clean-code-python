@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from typing import Dict
 from strenum import StrEnum
 
 MIN_PLAYERS = 2
@@ -17,6 +18,11 @@ class Game:
         self.places = [0] * MAX_PLAYERS
         self.purses = [0] * MAX_PLAYERS
         self.in_penalty_box = [0] * MAX_PLAYERS
+        self.categories: Dict[int, Category] = {0: Category.POP,
+                                 1: Category.SPORTS,
+                                 2: Category.SCIENCE,
+                                 3: Category.ROCK,
+                                 }
 
         self.pop_questions = []
         self.science_questions = []
@@ -93,10 +99,11 @@ class Game:
 
     @property
     def _current_category(self):
-        if self.places[self.current_player] % 4 == 0: return Category.POP
-        if self.places[self.current_player] % 4 == 1: return Category.SCIENCE
-        if self.places[self.current_player] % 4 == 2: return Category.SPORTS
-        if self.places[self.current_player] % 4 == 3: return Category.ROCK
+            
+        if self.places[self.current_player] % len(Category) == 0: return list(Category)[0]
+        if self.places[self.current_player] % len(Category) == 1: return Category.SCIENCE
+        if self.places[self.current_player] % len(Category) == 2: return Category.SPORTS
+        if self.places[self.current_player] % len(Category) == 3: return Category.ROCK
 
     def was_correctly_answered(self):
         if self.in_penalty_box[self.current_player]:
