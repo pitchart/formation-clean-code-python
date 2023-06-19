@@ -21,16 +21,11 @@ class Game:
         self.purses = [0] * MAX_PLAYERS
         self.in_penalty_box = [0] * MAX_PLAYERS
 
-        self.pop_questions = []
-        self.science_questions = []
-        self.sports_questions = []
-        self.rock_questions = []
-
         self.questions: Dict[Category, List[str]] = {
-            Category.POP: self.pop_questions,
-            Category.SCIENCE: self.science_questions,
-            Category.SPORTS: self.sports_questions,
-            Category.ROCK: self.rock_questions,
+            Category.POP: [],
+            Category.SCIENCE: [],
+            Category.SPORTS: [],
+            Category.ROCK: [],
         }
 
         self.categories: Dict[int, Category] = {
