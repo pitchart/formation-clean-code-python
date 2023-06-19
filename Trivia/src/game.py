@@ -44,11 +44,7 @@ class Game:
         self.is_getting_out_of_penalty_box = False
 
         for i in range(50):
-
-            self.pop_questions.append("Pop Question %s" % i)
-            self.science_questions.append("Science Question %s" % i)
-            self.sports_questions.append("Sports Question %s" % i)
-            self.rock_questions.append("Rock Question %s" % i)
+            [self.questions[category].append(f"{category} Question {i}") for category in self.categories.values()]
 
     def is_playable(self):
         return self.how_many_players >= MIN_PLAYERS
