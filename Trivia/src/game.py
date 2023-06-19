@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
-from typing import Dict
+from typing import Dict, List
 from strenum import StrEnum
 
 MIN_PLAYERS = 2
 BOARD_SIZE = 12
 MAX_PLAYERS = 6
 
+
 class Category(StrEnum):
-    POP='Pop'
-    SPORTS='Sports'
-    SCIENCE='Science'
-    ROCK='Rock'
+    POP = 'Pop'
+    SPORTS = 'Sports'
+    SCIENCE = 'Science'
+    ROCK = 'Rock'
+
 
 class Game:
     def __init__(self):
@@ -18,16 +20,24 @@ class Game:
         self.places = [0] * MAX_PLAYERS
         self.purses = [0] * MAX_PLAYERS
         self.in_penalty_box = [0] * MAX_PLAYERS
-        self.categories: Dict[int, Category] = {0: Category.POP,
-                                 1: Category.SPORTS,
-                                 2: Category.SCIENCE,
-                                 3: Category.ROCK,
-                                 }
+        self.categories: Dict[int, Category] = {
+            0: Category.POP,
+            1: Category.SCIENCE,
+            2: Category.SPORTS,
+            3: Category.ROCK,
+        }
 
         self.pop_questions = []
         self.science_questions = []
         self.sports_questions = []
         self.rock_questions = []
+
+        self.questions: Dict[int, List[str]] = {
+            0: self.pop_questions,
+            1: self.science_questions,
+            2: self.sports_questions,
+            3: self.rock_questions,
+        }
 
         self.current_player = 0
         self.is_getting_out_of_penalty_box = False
@@ -99,11 +109,8 @@ class Game:
 
     @property
     def _current_category(self):
-            
-        if self.places[self.current_player] % len(Category) == 0: return list(Category)[0]
-        if self.places[self.current_player] % len(Category) == 1: return Category.SCIENCE
-        if self.places[self.current_player] % len(Category) == 2: return Category.SPORTS
-        if self.places[self.current_player] % len(Category) == 3: return Category.ROCK
+        category_id = self.places[self.current_player] % len(Category)
+        return self.categories[category_id]
 
     def was_correctly_answered(self):
         if self.in_penalty_box[self.current_player]:
