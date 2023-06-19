@@ -54,33 +54,30 @@ class Game:
     def how_many_players(self):
         return len(self.players)
 
+    @staticmethod
+    def _is_roll_even(roll: int):
+        return roll % 2 != 0
+
     def roll(self, roll):
         print("%s is the current player" % self.players[self.current_player])
         print("They have rolled a %s" % roll)
 
+        if self.in_penalty_box[self.current_player] and not self._is_roll_even(roll):
+            print("%s is not getting out of the penalty box" % self.players[self.current_player])
+            self.is_getting_out_of_penalty_box = False
+            return
+
         if self.in_penalty_box[self.current_player]:
-            if roll % 2 != 0:
-                self.is_getting_out_of_penalty_box = True
+            self.is_getting_out_of_penalty_box = True
+            print("%s is getting out of the penalty box" % self.players[self.current_player])
 
-                print("%s is getting out of the penalty box" % self.players[self.current_player])
-                self._move_player(roll)
+        self._move_player(roll)
+        print(self.players[self.current_player] + \
+              '\'s new location is ' + \
+              str(self.places[self.current_player]))
+        print("The category is %s" % str(self._current_category))
+        self._ask_question()
 
-                print(self.players[self.current_player] + \
-                      '\'s new location is ' + \
-                      str(self.places[self.current_player]))
-                print("The category is %s" % str(self._current_category))
-                self._ask_question()
-            else:
-                print("%s is not getting out of the penalty box" % self.players[self.current_player])
-                self.is_getting_out_of_penalty_box = False
-        else:
-            self._move_player(roll)
-
-            print(self.players[self.current_player] + \
-                  '\'s new location is ' + \
-                  str(self.places[self.current_player]))
-            print("The category is %s" % str(self._current_category))
-            self._ask_question()
 
     def _move_player(self, roll):
         self.places[self.current_player] = (self.places[self.current_player] + roll) % BOARD_SIZE
@@ -104,12 +101,13 @@ class Game:
                       ' Gold Coins.')
 
                 winner = self._did_player_win()
-                self.next_player()
 
+                self.next_player()
                 return winner
             else:
+                winner = True
                 self.next_player()
-                return True
+                return winner
 
         print("Answer was corrent!!!!")
         self.win_coin()
@@ -119,8 +117,8 @@ class Game:
               ' Gold Coins.')
 
         winner = self._did_player_win()
-        self.next_player()
 
+        self.next_player()
         return winner
 
     def next_player(self):
