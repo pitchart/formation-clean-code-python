@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
+from enum import Enum
+
+MIN_PLAYERS = 2
+BOARD_SIZE = 12
+MAX_PLAYERS = 6
+
+class Category(str, Enum):
+    POP='Pop'
 
 class Game:
     def __init__(self):
         self.players = []
-        self.places = [0] * 6
-        self.purses = [0] * 6
-        self.in_penalty_box = [0] * 6
+        self.places = [0] * MAX_PLAYERS
+        self.purses = [0] * MAX_PLAYERS
+        self.in_penalty_box = [0] * MAX_PLAYERS
 
         self.pop_questions = []
         self.science_questions = []
@@ -25,7 +33,7 @@ class Game:
         return "Rock Question %s" % index
 
     def is_playable(self):
-        return self.how_many_players >= 2
+        return self.how_many_players >= MIN_PLAYERS
 
     def add(self, player_name):
         self.players.append(player_name)
@@ -52,26 +60,26 @@ class Game:
 
                 print("%s is getting out of the penalty box" % self.players[self.current_player])
                 self.places[self.current_player] = self.places[self.current_player] + roll
-                if self.places[self.current_player] > 11:
-                    self.places[self.current_player] = self.places[self.current_player] - 12
+                if self.places[self.current_player] >= BOARD_SIZE:
+                    self.places[self.current_player] = self.places[self.current_player] - BOARD_SIZE
 
                 print(self.players[self.current_player] + \
                       '\'s new location is ' + \
                       str(self.places[self.current_player]))
-                print("The category is %s" % self._current_category)
+                print("The category is %s" % str(self._current_category))
                 self._ask_question()
             else:
                 print("%s is not getting out of the penalty box" % self.players[self.current_player])
                 self.is_getting_out_of_penalty_box = False
         else:
             self.places[self.current_player] = self.places[self.current_player] + roll
-            if self.places[self.current_player] > 11:
-                self.places[self.current_player] = self.places[self.current_player] - 12
+            if self.places[self.current_player] >= BOARD_SIZE:
+                self.places[self.current_player] = self.places[self.current_player] - BOARD_SIZE
 
             print(self.players[self.current_player] + \
                   '\'s new location is ' + \
                   str(self.places[self.current_player]))
-            print("The category is %s" % self._current_category)
+            print("The category is %s" % str(self._current_category))
             self._ask_question()
 
     def _ask_question(self):
