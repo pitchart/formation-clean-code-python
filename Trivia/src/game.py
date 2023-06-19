@@ -20,12 +20,6 @@ class Game:
         self.places = [0] * MAX_PLAYERS
         self.purses = [0] * MAX_PLAYERS
         self.in_penalty_box = [0] * MAX_PLAYERS
-        self.categories: Dict[int, Category] = {
-            0: Category.POP,
-            1: Category.SCIENCE,
-            2: Category.SPORTS,
-            3: Category.ROCK,
-        }
 
         self.pop_questions = []
         self.science_questions = []
@@ -39,17 +33,22 @@ class Game:
             Category.ROCK: self.rock_questions,
         }
 
+        self.categories: Dict[int, Category] = {
+            0: Category.POP,
+            1: Category.SCIENCE,
+            2: Category.SPORTS,
+            3: Category.ROCK
+        }
+
         self.current_player = 0
         self.is_getting_out_of_penalty_box = False
 
         for i in range(50):
+
             self.pop_questions.append("Pop Question %s" % i)
             self.science_questions.append("Science Question %s" % i)
             self.sports_questions.append("Sports Question %s" % i)
-            self.rock_questions.append(self.create_rock_question(i))
-
-    def create_rock_question(self, index):
-        return "Rock Question %s" % index
+            self.rock_questions.append("Rock Question %s" % i)
 
     def is_playable(self):
         return self.how_many_players >= MIN_PLAYERS
