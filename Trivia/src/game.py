@@ -32,11 +32,11 @@ class Game:
         self.sports_questions = []
         self.rock_questions = []
 
-        self.questions: Dict[int, List[str]] = {
-            0: self.pop_questions,
-            1: self.science_questions,
-            2: self.sports_questions,
-            3: self.rock_questions,
+        self.questions: Dict[Category, List[str]] = {
+            Category.POP: self.pop_questions,
+            Category.SCIENCE: self.science_questions,
+            Category.SPORTS: self.sports_questions,
+            Category.ROCK: self.rock_questions,
         }
 
         self.current_player = 0
@@ -102,10 +102,7 @@ class Game:
             self._ask_question()
 
     def _ask_question(self):
-        if self._current_category == Category.POP: print(self.pop_questions.pop(0))
-        if self._current_category == Category.SCIENCE: print(self.science_questions.pop(0))
-        if self._current_category == Category.SPORTS: print(self.sports_questions.pop(0))
-        if self._current_category == Category.ROCK: print(self.rock_questions.pop(0))
+        print(self.questions[self._current_category].pop(0))
 
     @property
     def _current_category(self):
