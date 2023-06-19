@@ -21,30 +21,25 @@ class Game:
         self.purses = [0] * MAX_PLAYERS
         self.in_penalty_box = [0] * MAX_PLAYERS
 
-        self.questions: Dict[Category, List[str]] = {
-            Category.POP: [],
-            Category.SCIENCE: [],
-            Category.SPORTS: [],
-            Category.ROCK: [],
-        }
-
         self.categories: Dict[int, Category] = {
             0: Category.POP,
             1: Category.SCIENCE,
             2: Category.SPORTS,
             3: Category.ROCK
         }
-
+        self.questions: Dict[Category, List[str]] = {
+            category : [f"{category} Question {i}" for i in range(50)] 
+            for category 
+            in self.categories.values()
+        }
+        
         self.current_player = 0
         self.is_getting_out_of_penalty_box = False
-
-        for i in range(50):
-            [self.questions[category].append(f"{category} Question {i}") for category in self.categories.values()]
 
     def is_playable(self):
         return self.how_many_players >= MIN_PLAYERS
 
-    def add(self, player_name):
+    def add_player(self, player_name):
         self.players.append(player_name)
         self.places[self.how_many_players] = 0
         self.purses[self.how_many_players] = 0
@@ -68,9 +63,7 @@ class Game:
                 self.is_getting_out_of_penalty_box = True
 
                 print("%s is getting out of the penalty box" % self.players[self.current_player])
-                self.places[self.current_player] = self.places[self.current_player] + roll
-                if self.places[self.current_player] >= BOARD_SIZE:
-                    self.places[self.current_player] = self.places[self.current_player] - BOARD_SIZE
+                self._move_player(roll)
 
                 print(self.players[self.current_player] + \
                       '\'s new location is ' + \
@@ -81,15 +74,16 @@ class Game:
                 print("%s is not getting out of the penalty box" % self.players[self.current_player])
                 self.is_getting_out_of_penalty_box = False
         else:
-            self.places[self.current_player] = self.places[self.current_player] + roll
-            if self.places[self.current_player] >= BOARD_SIZE:
-                self.places[self.current_player] = self.places[self.current_player] - BOARD_SIZE
+            self._move_player(roll)
 
             print(self.players[self.current_player] + \
                   '\'s new location is ' + \
                   str(self.places[self.current_player]))
             print("The category is %s" % str(self._current_category))
             self._ask_question()
+
+    def _move_player(self, roll):
+        self.places[self.current_player] = (self.places[self.current_player] + roll) % BOARD_SIZE
 
     def _ask_question(self):
         print(self.questions[self._current_category].pop(0))
@@ -118,8 +112,6 @@ class Game:
                 self.current_player += 1
                 if self.current_player == len(self.players): self.current_player = 0
                 return True
-
-
 
         else:
 

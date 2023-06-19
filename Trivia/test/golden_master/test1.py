@@ -7,7 +7,7 @@ from src.game import Game
 
 game = Game()
 
-game.add("Cedric")
+game.add_player("Cedric")
 game.roll(12)
 game.wrong_answer()
 game.roll(2)

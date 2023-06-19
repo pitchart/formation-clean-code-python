@@ -6,8 +6,8 @@ sys.path.insert(0, './')
 from src.game import Game
 
 game = Game();
-game.add("Cedric");
-game.add("Eloise");
+game.add_player("Cedric");
+game.add_player("Eloise");
 game.roll(1);
 game.was_correctly_answered();
 game.roll(2);

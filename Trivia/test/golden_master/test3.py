@@ -7,8 +7,8 @@ from src.game import Game
 
 game = Game()
 
-game.add("Cedric");
-game.add("Eloise");
+game.add_player("Cedric");
+game.add_player("Eloise");
 game.roll(1);
 game.wrong_answer();
 game.roll(2);
