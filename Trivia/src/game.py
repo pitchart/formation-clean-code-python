@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-from enum import Enum
+from strenum import StrEnum
 
 MIN_PLAYERS = 2
 BOARD_SIZE = 12
 MAX_PLAYERS = 6
 
-class Category(str, Enum):
+class Category(StrEnum):
     POP='Pop'
+    SPORTS='Sports'
+    SCIENCE='Science'
+    ROCK='Rock'
 
 class Game:
     def __init__(self):
@@ -83,23 +86,23 @@ class Game:
             self._ask_question()
 
     def _ask_question(self):
-        if self._current_category == 'Pop': print(self.pop_questions.pop(0))
-        if self._current_category == 'Science': print(self.science_questions.pop(0))
-        if self._current_category == 'Sports': print(self.sports_questions.pop(0))
-        if self._current_category == 'Rock': print(self.rock_questions.pop(0))
+        if self._current_category == Category.POP: print(self.pop_questions.pop(0))
+        if self._current_category == Category.SCIENCE: print(self.science_questions.pop(0))
+        if self._current_category == Category.SPORTS: print(self.sports_questions.pop(0))
+        if self._current_category == Category.ROCK: print(self.rock_questions.pop(0))
 
     @property
     def _current_category(self):
-        if self.places[self.current_player] == 0: return 'Pop'
-        if self.places[self.current_player] == 4: return 'Pop'
-        if self.places[self.current_player] == 8: return 'Pop'
-        if self.places[self.current_player] == 1: return 'Science'
-        if self.places[self.current_player] == 5: return 'Science'
-        if self.places[self.current_player] == 9: return 'Science'
-        if self.places[self.current_player] == 2: return 'Sports'
-        if self.places[self.current_player] == 6: return 'Sports'
-        if self.places[self.current_player] == 10: return 'Sports'
-        return 'Rock'
+        if self.places[self.current_player] == 0: return Category.POP
+        if self.places[self.current_player] == 4: return Category.POP
+        if self.places[self.current_player] == 8: return Category.POP
+        if self.places[self.current_player] == 1: return Category.SCIENCE
+        if self.places[self.current_player] == 5: return Category.SCIENCE
+        if self.places[self.current_player] == 9: return Category.SCIENCE
+        if self.places[self.current_player] == 2: return Category.SPORTS
+        if self.places[self.current_player] == 6: return Category.SPORTS
+        if self.places[self.current_player] == 10: return Category.SPORTS
+        return Category.ROCK
 
     def was_correctly_answered(self):
         if self.in_penalty_box[self.current_player]:
