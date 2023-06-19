@@ -97,44 +97,44 @@ class Game:
         if self.in_penalty_box[self.current_player]:
             if self.is_getting_out_of_penalty_box:
                 print('Answer was correct!!!!')
-                self.purses[self.current_player] += 1
+                self.win_coin()
                 print(self.players[self.current_player] + \
                       ' now has ' + \
                       str(self.purses[self.current_player]) + \
                       ' Gold Coins.')
 
                 winner = self._did_player_win()
-                self.current_player += 1
-                if self.current_player == len(self.players): self.current_player = 0
+                self.next_player()
 
                 return winner
             else:
-                self.current_player += 1
-                if self.current_player == len(self.players): self.current_player = 0
+                self.next_player()
                 return True
 
-        else:
+        print("Answer was corrent!!!!")
+        self.win_coin()
+        print(self.players[self.current_player] + \
+              ' now has ' + \
+              str(self.purses[self.current_player]) + \
+              ' Gold Coins.')
 
-            print("Answer was corrent!!!!")
-            self.purses[self.current_player] += 1
-            print(self.players[self.current_player] + \
-                  ' now has ' + \
-                  str(self.purses[self.current_player]) + \
-                  ' Gold Coins.')
+        winner = self._did_player_win()
+        self.next_player()
 
-            winner = self._did_player_win()
-            self.current_player += 1
-            if self.current_player == len(self.players): self.current_player = 0
+        return winner
 
-            return winner
+    def next_player(self):
+        self.current_player = (self.current_player + 1) % len(self.players)
+
+    def win_coin(self):
+        self.purses[self.current_player] += 1
 
     def wrong_answer(self):
         print('Question was incorrectly answered')
         print(self.players[self.current_player] + " was sent to the penalty box")
         self.in_penalty_box[self.current_player] = True
 
-        self.current_player += 1
-        if self.current_player == len(self.players): self.current_player = 0
+        self.next_player()
         return True
 
     def _did_player_win(self):
