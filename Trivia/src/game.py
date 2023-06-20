@@ -82,6 +82,7 @@ class Game:
 
     def _move_player(self, roll):
         self.places[self.current_player] = (self.places[self.current_player] + roll) % BOARD_SIZE
+        # self.players[self.current_player].move_to((self.players[self.current_player].get_position() + roll) % BOARD_SIZE)
 
     def _ask_question(self):
         print(self.questions[self._current_category].pop(0))
