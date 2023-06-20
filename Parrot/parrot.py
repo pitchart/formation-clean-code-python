@@ -36,3 +36,7 @@ class Parrot:
 
     def _base_speed(self):
         return 12.0
+
+    @classmethod
+    def create(cls, type_of_parrot, number_of_coconuts, voltage, nailed):
+        return cls(type_of_parrot, number_of_coconuts, voltage, nailed)
