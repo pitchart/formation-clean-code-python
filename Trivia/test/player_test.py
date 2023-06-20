@@ -12,3 +12,8 @@ def test_move_player():
     player = Player('Paul')
     player.move_to(9)
     assert player.get_position() == 9
+
+def test_win_coin():
+    player = Player('Marco')
+    player.win_coin()
+    assert player.get_coins() == 1

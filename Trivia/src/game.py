@@ -18,8 +18,7 @@ class Category(StrEnum):
 
 class Game:
     def __init__(self):
-        self.players =[]
-        self.places = [0] * MAX_PLAYERS
+        self.players: List[Player] = []
         self.purses = [0] * MAX_PLAYERS
         self.in_penalty_box = [0] * MAX_PLAYERS
 
@@ -43,7 +42,6 @@ class Game:
     
     def add_player(self, player_name):
         self.players.append(Player(player_name))
-        self.places[self.how_many_players] = 0
         self.purses[self.how_many_players] = 0
         self.in_penalty_box[self.how_many_players] = False
 
@@ -76,20 +74,20 @@ class Game:
         self._move_player(roll)
         print(self.players[self.current_player].get_name() + \
               '\'s new location is ' + \
-              str(self.places[self.current_player]))
+              str(self.players[self.current_player].get_position()))
         print("The category is %s" % str(self._current_category))
         self._ask_question()
 
     def _move_player(self, roll):
-        self.places[self.current_player] = (self.places[self.current_player] + roll) % BOARD_SIZE
-        # self.players[self.current_player].move_to((self.players[self.current_player].get_position() + roll) % BOARD_SIZE)
+        self.players[self.current_player].move_to((self.players[self.current_player].get_position() + roll) % BOARD_SIZE)
+
 
     def _ask_question(self):
         print(self.questions[self._current_category].pop(0))
 
     @property
     def _current_category(self):
-        category_id = self.places[self.current_player] % len(Category)
+        category_id = self.players[self.current_player].get_position() % len(Category)
         return self.categories[category_id]
 
     def was_correctly_answered(self):
@@ -128,6 +126,7 @@ class Game:
 
     def win_coin(self):
         self.purses[self.current_player] += 1
+        # self.players[self.current_player].win_coin()
 
     def wrong_answer(self):
         print('Question was incorrectly answered')
