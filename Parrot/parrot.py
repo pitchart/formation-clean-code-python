@@ -1,7 +1,6 @@
 from enum import Enum
 
 
-
 class ParrotType(Enum):  # If it is not available, just remove it.
     EUROPEAN = 1
     AFRICAN = 2
@@ -17,16 +16,7 @@ class Parrot:
         self._nailed = nailed
 
     def speed(self):
-        if self._type == ParrotType.NORWEGIAN_BLUE:
-            if self._nailed:
-                return 0
-            else:
-                return self._compute_base_speed_for_voltage(self._voltage)
-
         raise ValueError("should be unreachable")
-
-    def _compute_base_speed_for_voltage(self, voltage):
-        return min([24.0, voltage * self._base_speed()])
 
     def _load_factor(self):
         return 9.0
@@ -40,6 +30,6 @@ class Parrot:
             return cls()
         if type_of_parrot == ParrotType.AFRICAN:
             return cls(number_of_coconuts=number_of_coconuts)
+        if type_of_parrot == ParrotType.NORWEGIAN_BLUE:
+            return cls(voltage=voltage, nailed=nailed)
         return cls(type_of_parrot, number_of_coconuts, voltage, nailed)
-
-
