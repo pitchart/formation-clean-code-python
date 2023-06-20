@@ -1,3 +1,4 @@
+from african_parrot import AfricanParrot
 from parrot import Parrot, ParrotType
 from european_parrot import EuropeanParrot
 from unittest import TestCase
@@ -12,18 +13,19 @@ class EuropeanParrotTest(TestCase):
 
 class ParrotTest(TestCase):
 
+    
     def test_speedOfAfricanParrot_With_One_Coconut(self):
-        parrot = Parrot.create(ParrotType.AFRICAN, 1, 0, False)
+        parrot = AfricanParrot.create(ParrotType.AFRICAN, 1, 0, False)
         self.assertEqual(3.0, parrot.speed())
 
 
     def test_speedOfAfricanParrot_With_Two_Coconuts(self):
-        parrot = Parrot.create(ParrotType.AFRICAN, 2, 0, False)
+        parrot = AfricanParrot.create(ParrotType.AFRICAN, 2, 0, False)
         self.assertEqual(0.0, parrot.speed())
 
 
     def test_speedOfAfricanParrot_With_No_Coconuts(self):
-        parrot = Parrot.create(ParrotType.AFRICAN, 0, 0, False)
+        parrot = AfricanParrot.create(ParrotType.AFRICAN, 0, 0, False)
         self.assertEqual(12.0, parrot.speed())
 
 

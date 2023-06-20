@@ -1,4 +1,5 @@
-from enum import Enum  # Enum is introduced in Python 3.4.
+from enum import Enum
+
 
 
 class ParrotType(Enum):  # If it is not available, just remove it.
@@ -16,8 +17,6 @@ class Parrot:
         self._nailed = nailed
 
     def speed(self):
-        if self._type == ParrotType.AFRICAN:
-            return max(0, self._base_speed() - self._load_factor() * self._number_of_coconuts)
         if self._type == ParrotType.NORWEGIAN_BLUE:
             if self._nailed:
                 return 0
@@ -39,6 +38,8 @@ class Parrot:
     def create(cls, type_of_parrot, number_of_coconuts, voltage, nailed):
         if type_of_parrot == ParrotType.EUROPEAN:
             return cls()
+        if type_of_parrot == ParrotType.AFRICAN:
+            return cls(number_of_coconuts=number_of_coconuts)
         return cls(type_of_parrot, number_of_coconuts, voltage, nailed)
 
 

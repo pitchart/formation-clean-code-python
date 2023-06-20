@@ -1,4 +1,4 @@
-*.received.*
+
 .pytest_cache
 
 .idea
@@ -7,3 +7,4 @@ __pycache__
 clean_code
 .vscode
 Trivia/clean_code_trivia
+Parrot/clean_code_parrot
