@@ -78,7 +78,6 @@ class Game:
         print("The category is %s" % str(self._current_category))
         self._ask_question()
 
-
     def _move_player(self, roll):
         self.places[self.current_player] = (self.places[self.current_player] + roll) % BOARD_SIZE
 
