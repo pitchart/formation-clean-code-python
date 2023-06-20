@@ -1,11 +1,16 @@
 from parrot import Parrot, ParrotType
+from european_parrot import EuropeanParrot
 from unittest import TestCase
 
-class ParrotTest(TestCase):
+
+class EuropeanParrotTest(TestCase):
 
     def test_speedOfEuropeanParrot(self) -> None:
-        parrot = Parrot.create(ParrotType.EUROPEAN, 0, 0, False)
+        parrot = EuropeanParrot.create(ParrotType.EUROPEAN, 0, 0, False)
         self.assertEqual(12.0, parrot.speed())
+
+
+class ParrotTest(TestCase):
 
     def test_speedOfAfricanParrot_With_One_Coconut(self):
         parrot = Parrot.create(ParrotType.AFRICAN, 1, 0, False)
