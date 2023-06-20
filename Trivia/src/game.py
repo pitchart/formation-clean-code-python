@@ -2,6 +2,8 @@
 from typing import Dict, List
 from strenum import StrEnum
 
+from src.player import Player
+
 MIN_PLAYERS = 2
 BOARD_SIZE = 12
 MAX_PLAYERS = 6
@@ -17,6 +19,7 @@ class Category(StrEnum):
 class Game:
     def __init__(self):
         self.players = []
+        self.players_list =[]
         self.places = [0] * MAX_PLAYERS
         self.purses = [0] * MAX_PLAYERS
         self.in_penalty_box = [0] * MAX_PLAYERS
@@ -38,8 +41,9 @@ class Game:
 
     def is_playable(self):
         return self.how_many_players >= MIN_PLAYERS
-
+    
     def add_player(self, player_name):
+        self.players_list.append(Player(player_name))
         self.players.append(player_name)
         self.places[self.how_many_players] = 0
         self.purses[self.how_many_players] = 0
@@ -59,20 +63,20 @@ class Game:
         return roll % 2 != 0
 
     def roll(self, roll):
-        print("%s is the current player" % self.players[self.current_player])
+        print("%s is the current player" % self.players_list[self.current_player].get_name())
         print("They have rolled a %s" % roll)
 
         if self.in_penalty_box[self.current_player] and not self._is_roll_even(roll):
-            print("%s is not getting out of the penalty box" % self.players[self.current_player])
+            print("%s is not getting out of the penalty box" % self.players_list[self.current_player].get_name())
             self.is_getting_out_of_penalty_box = False
             return
 
         if self.in_penalty_box[self.current_player]:
             self.is_getting_out_of_penalty_box = True
-            print("%s is getting out of the penalty box" % self.players[self.current_player])
+            print("%s is getting out of the penalty box" % self.players_list[self.current_player].get_name())
 
         self._move_player(roll)
-        print(self.players[self.current_player] + \
+        print(self.players_list[self.current_player].get_name() + \
               '\'s new location is ' + \
               str(self.places[self.current_player]))
         print("The category is %s" % str(self._current_category))
@@ -94,7 +98,7 @@ class Game:
             if self.is_getting_out_of_penalty_box:
                 print('Answer was correct!!!!')
                 self.win_coin()
-                print(self.players[self.current_player] + \
+                print(self.players_list[self.current_player].get_name() + \
                       ' now has ' + \
                       str(self.purses[self.current_player]) + \
                       ' Gold Coins.')
@@ -110,7 +114,7 @@ class Game:
 
         print("Answer was corrent!!!!")
         self.win_coin()
-        print(self.players[self.current_player] + \
+        print(self.players_list[self.current_player].get_name() + \
               ' now has ' + \
               str(self.purses[self.current_player]) + \
               ' Gold Coins.')
@@ -128,7 +132,7 @@ class Game:
 
     def wrong_answer(self):
         print('Question was incorrectly answered')
-        print(self.players[self.current_player] + " was sent to the penalty box")
+        print(self.players_list[self.current_player].get_name() + " was sent to the penalty box")
         self.in_penalty_box[self.current_player] = True
 
         self.next_player()

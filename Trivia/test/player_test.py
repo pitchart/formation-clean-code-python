@@ -1,18 +1,4 @@
-class Player:
-    def __init__(self, name) -> None:
-        self.name = name
-
-    def get_name(self):
-        pass
-
-    def get_position(self):
-        pass
-
-    def get_coins(self):
-        pass
-
-    def is_in_penalty_box(self):
-        pass
+from src.player import Player
 
 
 def test_create_player():
