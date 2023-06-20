@@ -1,9 +1,8 @@
-from parrot import Parrot, ParrotType
+from parrot import Parrot
 
 
 class NorwegianBlueParrot(Parrot):
     def __init__(self, voltage, nailed):
-        super().__init__(ParrotType.NORWEGIAN_BLUE, number_of_coconuts=0, voltage=voltage, nailed=nailed)
         self.voltage = voltage
         self.nailed = nailed
         self.base_speed = 12
@@ -16,5 +15,3 @@ class NorwegianBlueParrot(Parrot):
             return 0
         else:
             return self._compute_base_speed_for_voltage()
-
-
