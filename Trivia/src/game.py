@@ -4,7 +4,8 @@ class Game:
     def __init__(self):
         self.MIN_NB_PLAYERS = 2
         self.MAX_NB_PLAYERS = 6
-        
+        self.BOARD_SIZE = 12
+
         self.players = []
         self.places = [0] * self.MAX_NB_PLAYERS
         self.purses = [0] * self.MAX_NB_PLAYERS
@@ -55,8 +56,8 @@ class Game:
 
                 print("%s is getting out of the penalty box" % self.players[self.current_player])
                 self.places[self.current_player] = self.places[self.current_player] + roll
-                if self.places[self.current_player] > 11:
-                    self.places[self.current_player] = self.places[self.current_player] - 12
+                if self.places[self.current_player] >= self.BOARD_SIZE:
+                    self.places[self.current_player] = self.places[self.current_player] - self.BOARD_SIZE
 
                 print(self.players[self.current_player] + \
                       '\'s new location is ' + \
@@ -68,8 +69,8 @@ class Game:
                 self.is_getting_out_of_penalty_box = False
         else:
             self.places[self.current_player] = self.places[self.current_player] + roll
-            if self.places[self.current_player] > 11:
-                self.places[self.current_player] = self.places[self.current_player] - 12
+            if self.places[self.current_player] >= self.BOARD_SIZE:
+                self.places[self.current_player] = self.places[self.current_player] - self.BOARD_SIZE
 
             print(self.players[self.current_player] + \
                   '\'s new location is ' + \
