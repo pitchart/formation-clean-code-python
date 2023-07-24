@@ -22,7 +22,7 @@ def test_3() -> None:
 
 
 def run_golden_master(test: string) -> string:
-    cmd = "python.exe ./test/golden_master/%s.py" % test
+    cmd = "python ./test/golden_master/%s.py" % test
     with tempfile.TemporaryFile(mode='w+') as output:
         proc = subprocess.Popen(cmd, stdout=output, shell=True)
         proc.wait()
