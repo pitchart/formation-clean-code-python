@@ -2,10 +2,13 @@
 
 class Game:
     def __init__(self):
+        self.MIN_NB_PLAYERS = 2
+        self.MAX_NB_PLAYERS = 6
+        
         self.players = []
-        self.places = [0] * 6
-        self.purses = [0] * 6
-        self.in_penalty_box = [0] * 6
+        self.places = [0] * self.MAX_NB_PLAYERS
+        self.purses = [0] * self.MAX_NB_PLAYERS
+        self.in_penalty_box = [0] * self.MAX_NB_PLAYERS
 
         self.pop_questions = []
         self.science_questions = []
@@ -25,7 +28,7 @@ class Game:
         return "Rock Question %s" % index
 
     def is_playable(self):
-        return self.how_many_players >= 2
+        return self.how_many_players >= self.MIN_NB_PLAYERS
 
     def add(self, player_name):
         self.players.append(player_name)
