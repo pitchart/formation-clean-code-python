@@ -27,26 +27,21 @@ class Game:
         self.purses = [0] * self.MAX_NB_PLAYERS
         self.in_penalty_box = [0] * self.MAX_NB_PLAYERS
 
-        self.pop_questions = []
-        self.science_questions = []
-        self.sports_questions = []
-        self.rock_questions = []
-
         self.current_player = 0
         self.is_getting_out_of_penalty_box = False
 
         self.questions_dict = {
-            Category.POP: self.pop_questions,
-            Category.SCIENCE: self.science_questions,
-            Category.SPORTS: self.sports_questions,
-            Category.ROCK: self.rock_questions
+            Category.POP: [],
+            Category.SCIENCE: [],
+            Category.SPORTS: [],
+            Category.ROCK: []
         }
 
         for i in range(50):
-            self.pop_questions.append("Pop Question %s" % i)
-            self.science_questions.append("Science Question %s" % i)
-            self.sports_questions.append("Sports Question %s" % i)
-            self.rock_questions.append("Rock Question %s" % i)
+            self.questions_dict[Category.POP].append("Pop Question %s" % i)
+            self.questions_dict[Category.SCIENCE].append("Science Question %s" % i)
+            self.questions_dict[Category.SPORTS].append("Sports Question %s" % i)
+            self.questions_dict[Category.ROCK].append("Rock Question %s" % i)
 
     def is_playable(self):
         return self.how_many_players >= self.MIN_NB_PLAYERS
@@ -104,49 +99,29 @@ class Game:
         return categories[choice]
 
     def was_correctly_answered(self):
-        if self.in_penalty_box[self.current_player]:
-            if self.is_getting_out_of_penalty_box:
+        winner = True
+        if (self.in_penalty_box[self.current_player] and self.is_getting_out_of_penalty_box) or not self.in_penalty_box[self.current_player]:
                 print('Answer was correct!!!!')
                 self.purses[self.current_player] += 1
                 print(self.players[self.current_player] + \
                       ' now has ' + \
                       str(self.purses[self.current_player]) + \
                       ' Gold Coins.')
-
                 winner = self._did_player_win()
-                self.current_player += 1
-                if self.current_player == len(self.players): self.current_player = 0
 
-                return winner
-            else:
-                self.current_player += 1
-                if self.current_player == len(self.players): self.current_player = 0
-                return True
+        self.next_player()
+        return winner
 
-
-
-        else:
-
-            print("Answer was corrent!!!!")
-            self.purses[self.current_player] += 1
-            print(self.players[self.current_player] + \
-                  ' now has ' + \
-                  str(self.purses[self.current_player]) + \
-                  ' Gold Coins.')
-
-            winner = self._did_player_win()
-            self.current_player += 1
-            if self.current_player == len(self.players): self.current_player = 0
-
-            return winner
+    def next_player(self):
+        self.current_player += 1
+        if self.current_player == len(self.players): self.current_player = 0
 
     def wrong_answer(self):
         print('Question was incorrectly answered')
         print(self.players[self.current_player] + " was sent to the penalty box")
         self.in_penalty_box[self.current_player] = True
 
-        self.current_player += 1
-        if self.current_player == len(self.players): self.current_player = 0
+        self.next_player()
         return True
 
     def _did_player_win(self):
