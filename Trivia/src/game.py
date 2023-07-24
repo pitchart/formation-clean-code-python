@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from enum import Enum
 
+
 class Category(Enum):
     def __str__(self):
         return str(self.value)
@@ -9,6 +10,10 @@ class Category(Enum):
     SCIENCE = 'Science'
     SPORTS = 'Sports'
     ROCK = 'Rock'
+
+    @staticmethod
+    def build_dict_categories():
+        return {0: Category.POP, 1: Category.SCIENCE, 2: Category.SPORTS, 3: Category.ROCK}
 
 
 class Game:
@@ -92,8 +97,8 @@ class Game:
 
     @property
     def _current_category(self):
-        categories = {0: Category.POP, 1: Category.SCIENCE, 2: Category.SPORTS, 3: Category.ROCK}
         choice = self.places[self.current_player]%len(Category)
+        categories = Category.build_dict_categories()
         return categories[choice]
 
     def was_correctly_answered(self):
