@@ -35,14 +35,18 @@ class Game:
         self.current_player = 0
         self.is_getting_out_of_penalty_box = False
 
+        self.questions_dict = {
+            Category.POP: self.pop_questions,
+            Category.SCIENCE: self.science_questions,
+            Category.SPORTS: self.sports_questions,
+            Category.ROCK: self.rock_questions
+        }
+
         for i in range(50):
             self.pop_questions.append("Pop Question %s" % i)
             self.science_questions.append("Science Question %s" % i)
             self.sports_questions.append("Sports Question %s" % i)
-            self.rock_questions.append(self.create_rock_question(i))
-
-    def create_rock_question(self, index):
-        return "Rock Question %s" % index
+            self.rock_questions.append("Rock Question %s" % i)
 
     def is_playable(self):
         return self.how_many_players >= self.MIN_NB_PLAYERS
@@ -90,10 +94,8 @@ class Game:
         print("The category is %s" % self._current_category)
 
     def _ask_question(self):
-        if self._current_category == Category.POP : print(self.pop_questions.pop(0))
-        if self._current_category == Category.SCIENCE : print(self.science_questions.pop(0))
-        if self._current_category == Category.SPORTS : print(self.sports_questions.pop(0))
-        if self._current_category == Category.ROCK : print(self.rock_questions.pop(0))
+        print(self.questions_dict[self._current_category].pop(0))
+
 
     @property
     def _current_category(self):
